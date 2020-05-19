@@ -1,0 +1,7 @@
+#!/bin/bash
+
+value=`cat cppFiles.txt`
+clear
+echo "compiling... " $value
+g++ -Wall -o main $value
+./main

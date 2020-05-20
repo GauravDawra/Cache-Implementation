@@ -1,5 +1,6 @@
 main.cpp 
 associative.cpp 
 directive.cpp 
+n_wayAssociative.cpp
 resources.cpp 
 type.cpp

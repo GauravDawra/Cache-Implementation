@@ -3,5 +3,6 @@
 
 enum type{
     associative = 0,
-    directive
+    directive,
+    n_wayAssociative
 };

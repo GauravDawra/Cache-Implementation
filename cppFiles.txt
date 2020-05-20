@@ -1,1 +1,5 @@
-main.cpp associative.cpp resources.cpp type.cpp
+main.cpp 
+associative.cpp 
+directive.cpp 
+resources.cpp 
+type.cpp

@@ -13,11 +13,11 @@ private:
     vector<vector<int> > dataArray;
     int read(string tag, string offset);
     void write(string tag, string offset, int data);
+    int associativePtr;
 
 public:
     associativeCache() : size(0), noOfLines(0), blockSize(0) { }
-    int associativePtr;
-    associativeCache(int S, int CL, int B) : size(S), noOfLines(CL), blockSize(B)
+    associativeCache(int CL, int B) : size(CL * B), noOfLines(CL), blockSize(B)
     {
         logS = (int) log2(size);
         logNOL = (int) log2(noOfLines);

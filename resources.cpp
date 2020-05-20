@@ -12,3 +12,12 @@ int binaryToDecimal(string s){
         sum+=((s[i]-'0') * (1 << (n-1-i)));
     return sum;
 }
+
+// std::string string(int x){
+//     std::string ans = "";
+//     while(x){
+//         ans += (x%10) + '0';
+//         x/=10;
+//     }
+//     return ans;
+// }

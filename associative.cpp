@@ -39,6 +39,7 @@ int associativeCache::read(string tag, string offset){
     for(int i=0;i<noOfLines;i++){
         if(tagArray[i] == tag) return dataArray[i][binaryToDecimal(offset)];
     }
+    std::cout << "READ MISS for address " << tag + offset << std::endl;
     return -1;
 }
 
@@ -51,11 +52,13 @@ void associativeCache::write(string tag, string offset, int data){
             index = i;
             break; 
         }
+
     if(present){
         dataArray[index][binaryToDecimal(offset)] = data;
     }
+
     else{
-        std::cout << "MISS for address " << tag + offset << std::endl;
+        std::cout << "WRITE MISS for address " << tag + offset << std::endl;
         vector<int> c(blockSize, 0);
         dataArray[associativePtr] = c;
         dataArray[associativePtr][binaryToDecimal(offset)] = data;

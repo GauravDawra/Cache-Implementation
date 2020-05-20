@@ -1,18 +1,66 @@
 #include "cache.h"
-// #include "type.h"
-
-int binaryToDecimal(string s){
-    int sum=0;
-    for(int i=s.length()-1;i>=0;i--) {sum+=((s[i]-'0')*(1<<i));}
-    return sum;
-}
+#include "resources.h"
+#include "associativeCache.h"
 
 // template<type T>
-int cache::associativeRead(string tag, string offset){
-    // cout<<"working";
-    // bool hit=false;
+
+int associativeCache::read(string address){
+    string offset = "";
+    string tag = "";
+    int tagSize = WORD_SIZE - logBS;
+    for(int i=0;i<tagSize;i++)
+        tag += address[i];
+
+    for(int i=tagSize;i<address.length();i++)
+        offset += address[i];
+    
+    return read(tag, offset);
+    
+}
+
+void associativeCache::write(string address, int data){
+    string offset = "";
+    string tag = "";
+    int tagSize = WORD_SIZE - logBS;
+    
+    for(int i=0;i<tagSize;i++)
+        tag += address[i];
+
+    for(int i=tagSize;i<address.length();i++)
+        offset += address[i];
+
+    write(tag, offset, data);
+    
+    return;
+}
+
+
+int associativeCache::read(string tag, string offset){
     for(int i=0;i<noOfLines;i++){
         if(tagArray[i] == tag) return dataArray[i][binaryToDecimal(offset)];
     }
     return -1;
+}
+
+void associativeCache::write(string tag, string offset, int data){
+    bool present = 0;
+    int index=-1;
+    for(int i=0;i<=noOfLines;i++) 
+        if(tagArray[i] == tag) {
+            present = 1; 
+            index = i;
+            break; 
+        }
+    if(present){
+        dataArray[index][binaryToDecimal(offset)] = data;
+    }
+    else{
+        std::cout << "MISS for address " << tag + offset << std::endl;
+        vector<int> c(blockSize, 0);
+        dataArray[associativePtr] = c;
+        dataArray[associativePtr][binaryToDecimal(offset)] = data;
+        tagArray[associativePtr] = tag;
+        associativePtr = (associativePtr + 1) % noOfLines;
+        return;
+    }
 }

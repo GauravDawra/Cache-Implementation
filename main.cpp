@@ -1,14 +1,14 @@
-#include <iostream>
+// #include <iostream>
 #include "cache.h"
-#include "type.h"
-// #include "resources.h"
+#include "associativeCache.h"
 using namespace std;
-// int WORD_SIZE = 32;
-//  extern int wordSize;
+
 int main(){
-    cache c(1,(1<<13),128,64);
-    c.print();
-    cout<<c.read("0000000000000000000000000000");
-    
+    associativeCache c((1<<13), 128, 64);
+    c.write("00000000000000000000000000000000", 101);
+    c.write("00101110000010001011000000100001", 102);
+    cout << c.read("00000000000000000000000000000000");
+    cout << c.read("00101110000010001011000000100001");
+
     return 0;
 }

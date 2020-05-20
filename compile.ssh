@@ -3,5 +3,4 @@
 value=`cat cppFiles.txt`
 clear
 echo "compiling... " $value
-g++ -Wall -o main $value
-./main
+g++ -Wall -o main $value && ./main

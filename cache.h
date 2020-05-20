@@ -1,10 +1,55 @@
 #pragma once
+
+#include "associativeCache.h"
+#include "directiveCache.h"
+
 #include <iostream>
 #include <string>
 #include <math.h>
 #include <vector>
+
 #include "resources.h"
+#include "type.h"
+
 using namespace std;
+
+template<type T>
+class cache : public associativeCache, public directiveCache
+{
+private:
+    int size, noOfLines, blockSize;
+public:
+    // cache() : size(0), noOfLines(0), blockSize(0) { }
+    cache(int CL = 0, int B = 0) :  associativeCache(CL,B), directiveCache(CL, B)
+    {
+        size = CL * B; 
+        noOfLines = CL;
+        blockSize = B;
+    }
+    
+    int read(string address){
+        // cout
+        switch(T){
+            case associative:
+                return associativeCache::read(address);
+                break;
+            case directive:
+                return directiveCache::read(address);
+                break;
+        }
+    }
+    void write(string address, int data){
+        switch(T){
+            case associative:
+                associativeCache::write(address, data);
+                break;
+            case directive:
+                directiveCache::write(address, data);
+                break;
+        }
+    }
+
+};
 
 // extern const int WORD_SIZE;
 // extern int binaryToDecimal(string s);

@@ -1,5 +1,6 @@
-// #pragma once
 #include "cache.h"
 
-
-// extern type Type;
+// enum type{
+//     associative = 0,
+//     directive
+// };

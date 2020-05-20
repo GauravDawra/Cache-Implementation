@@ -48,7 +48,6 @@ void n_wayAssociativeCache::write(string index, string tag, string offset, int d
     for(int i=start;i<start+n;i++){
         if(tagArray[i] == tag){
             dataArray[i][(binaryToDecimal(offset))] = data;
-            cout<<'z'<<tag+index+offset<<endl;
             return;
         }
     }

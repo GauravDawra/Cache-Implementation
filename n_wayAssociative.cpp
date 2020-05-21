@@ -1,6 +1,18 @@
 #include "cache.h"
 #include "n_wayAssociativeCache.h"
 
+n_wayAssociativeCache::n_wayAssociativeCache(int CL, int B, int N) : size(CL * B), noOfLines(CL), 
+        blockSize(B), n(N)
+    {
+        logS = (int) log2(size);
+        logNOL = (int) log2(noOfLines);
+        logBS = (int) log2(blockSize);
+        tagArray.assign(noOfLines, "");
+        vector<int> c(blockSize, 0);
+        dataArray.assign(noOfLines, c);
+        n_wayAssociativePtr.assign(noOfLines / n, 0);
+    }
+
 void n_wayAssociativeCache::write(string address, int data){
     int indexSize = log2(noOfLines / n);
     int tagSize = WORD_SIZE - indexSize - logBS;

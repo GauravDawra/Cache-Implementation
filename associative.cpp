@@ -2,7 +2,17 @@
 #include "resources.h"
 #include "associativeCache.h"
 
-// template<type T>
+
+associativeCache::associativeCache(int CL, int B) : size(CL * B), noOfLines(CL), blockSize(B)
+{
+    logS = (int) log2(size);
+    logNOL = (int) log2(noOfLines);
+    logBS = (int) log2(blockSize);
+    tagArray.assign(noOfLines, "");
+    vector<int> c(blockSize, 0);
+    dataArray.assign(noOfLines, c);
+    associativePtr = 0;
+}
 
 int associativeCache::read(string address){
     string offset = "";

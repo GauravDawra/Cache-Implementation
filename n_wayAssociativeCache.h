@@ -15,17 +15,7 @@ private:
     void write(string index, string tag, string offset, int data);
     
 public:
-    n_wayAssociativeCache(int CL, int B, int N = 0) : size(CL * B), noOfLines(CL), 
-        blockSize(B), n(N)
-    {
-        logS = (int) log2(size);
-        logNOL = (int) log2(noOfLines);
-        logBS = (int) log2(blockSize);
-        tagArray.assign(noOfLines, "");
-        vector<int> c(blockSize, 0);
-        dataArray.assign(noOfLines, c);
-        n_wayAssociativePtr.assign(noOfLines / n, 0);
-    }
+    n_wayAssociativeCache(int CL, int B, int N = 2);
     int read(string address);
     void write(string address, int data);
 };

@@ -1,6 +1,16 @@
 #include "cache.h"
 #include "directiveCache.h"
 
+directiveCache::directiveCache(int CL, int B) : size(CL * B), noOfLines (CL), blockSize(B)
+{
+    logS = (int) log2(size);
+    logNOL = (int) log2(noOfLines);
+    logBS = (int) log2(blockSize);
+    tagArray.assign(noOfLines, "#");
+    vector<int> c(blockSize, 0);
+    dataArray.assign(noOfLines, c);
+}
+
 int directiveCache::read(string address){
     int tagSize = WORD_SIZE - logNOL - logBS;
     

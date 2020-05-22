@@ -11,7 +11,8 @@ void run(cache<T> &c) {
             string address;
             cin >> address;
             cout << c.read(address) << endl;
-        } else if (command == "write") {
+        } 
+        else if (command == "write") {
             string address;
             int data;
             cin >> address >> data;

@@ -12,7 +12,6 @@ to declare a cache structure of one of the following types:
 # We can change the word size by changing the value of the constant `WORD_SIZE` 
 # in "resources.cpp"
 
-
 # The cache "class" has the following prototype:
 #    template<type T> cache<T>
 
@@ -35,13 +34,11 @@ The cache class derives from the following three classes publically:
 
 The following are the functionalities provided by the cache<T> class:
 
- - **read <address>** : this command reads the content at the address if the address if    
- present in the cache (that is in the case of a cache HIT). Otherwise, in case of 
+ - **read <address>** : this command reads the content at the address if the address is  present in the cache (that is in the case of a cache HIT). Otherwise, in case of 
  cache MISS, no replacement takes place (since main memory has not been maintained, 
  and the original contents cannot be read).
 
- - **write <address> <data>** : this command writes the contents of data (of type int) at 
- the address if the address is present in the cache (that is, in case of a cache HIT). 
+ - **write <address> <data>** : this command writes the contents of data (of type int) at the address if the address is present in the cache (that is, in case of a cache HIT. 
  Otherwise, in case of a MISS, it loads the particular address in the cache. If an empty 
  slot is present, it loads the new address in this neempty slot. Otherwise, it replaces 
  a slot in the cache with the new address.

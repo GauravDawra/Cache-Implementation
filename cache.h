@@ -1,46 +1,44 @@
 #pragma once
 
-#include "associativeCache.h"
-#include "directiveCache.h"
-#include "n_wayAssociativeCache.h"
+#include <math.h>
 
 #include <iostream>
 #include <string>
-#include <math.h>
 #include <vector>
 
+#include "associativeCache.h"
+#include "directiveCache.h"
+#include "n_wayAssociativeCache.h"
 #include "resources.h"
 #include "type.h"
 
 using namespace std;
 
-template<type T>
-class cache : public associativeCache, public directiveCache, public n_wayAssociativeCache
-{
+template <type T>
+class cache : public associativeCache, public directiveCache, public n_wayAssociativeCache {
 private:
     int size, noOfLines, blockSize;
+
 public:
-    cache() : size(0), noOfLines(0), blockSize(0) { }
+    cache() : size(0), noOfLines(0), blockSize(0) {}
     cache(int CL = 0, int B = 0, int n = 2);
-    
+
     int read(string address);
     void write(string address, int data);
-
 };
 
 template<type T>
-cache<T>::cache(int CL, int B, int n) :  associativeCache(CL, B), 
+cache<T>::cache(int CL, int B, int n) : associativeCache(CL, B), 
         directiveCache(CL, B), n_wayAssociativeCache(CL, B, n)
 {
     size = CL * B; 
     noOfLines = CL;
     blockSize = B;
 }
-    
 
-template<type T>
-int cache<T>::read(string address){
-    switch(T){
+template <type T>
+int cache<T>::read(string address) {
+    switch (T) {
         case associative:
             return associativeCache::read(address);
             break;
@@ -53,9 +51,9 @@ int cache<T>::read(string address){
     }
 }
 
-template<type T>
-void cache<T>::write(string address, int data){
-    switch(T){
+template <type T>
+void cache<T>::write(string address, int data) {
+    switch (T) {
         case associative:
             associativeCache::write(address, data);
             break;

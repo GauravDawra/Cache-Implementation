@@ -46,12 +46,11 @@ The following are the functionalities provided by the cache<T> class:
  slot is present, it loads the new address in this neempty slot. Otherwise, it replaces 
  a slot in the cache with the new address.
 
-# NOTE: all replacements take place in FIFO order.
-
+# NOTE: all replacements take place in FIFO order
 
 # USER INTERFACE:
 
-The user interface is implemented in main.cpp. To compile and run the files, 
+The user interface is implemented in _"main.cpp"_. To compile and run the files, 
 we have to run the command _"./compile"_. _"compile.ssh"_ is a bash file which takes 
 care of the compilation.
 The exe file asks for an input for the choice of cache to be used.

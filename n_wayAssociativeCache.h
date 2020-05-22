@@ -2,9 +2,8 @@
 
 #include "cache.h"
 #include "resources.h"
-// int x = 10;
 
-class n_wayAssociativeCache{
+class n_wayAssociativeCache {
 private:
     int size, noOfLines, blockSize, n;
     int logS, logNOL, logBS;
@@ -13,7 +12,7 @@ private:
     vector<int> n_wayAssociativePtr;
     int read(string index, string tag, string offset);
     void write(string index, string tag, string offset, int data);
-    
+
 public:
     n_wayAssociativeCache(int CL, int B, int N = 2);
     int read(string address);

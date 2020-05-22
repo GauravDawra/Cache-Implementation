@@ -1,12 +1,14 @@
 #pragma once
+#include <math.h>
+
 #include <iostream>
 #include <vector>
-#include <math.h>
+
 #include "resources.h"
 
 using namespace std;
 
-class associativeCache{
+class associativeCache {
 private:
     int size, noOfLines, blockSize;
     int logS, logNOL, logBS;
@@ -17,8 +19,8 @@ private:
     int associativePtr;
 
 public:
-    associativeCache() : size(0), noOfLines(0), blockSize(0) { }
-    associativeCache(int CL, int B) ;
+    associativeCache() : size(0), noOfLines(0), blockSize(0) {}
+    associativeCache(int CL, int B);
 
     int read(string address);
     void write(string address, int data);

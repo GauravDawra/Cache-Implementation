@@ -1,9 +1,9 @@
+#include "associativeCache.h"
 #include "cache.h"
 #include "resources.h"
-#include "associativeCache.h"
 
-
-associativeCache::associativeCache(int CL, int B) : size(CL * B), noOfLines(CL), blockSize(B)
+associativeCache::associativeCache(int CL, int B) : 
+    size(CL * B), noOfLines(CL), blockSize(B) 
 {
     logS = (int) log2(size);
     logNOL = (int) log2(noOfLines);
@@ -14,60 +14,58 @@ associativeCache::associativeCache(int CL, int B) : size(CL * B), noOfLines(CL),
     associativePtr = 0;
 }
 
-int associativeCache::read(string address){
+int associativeCache::read(string address) {
     string offset = "";
     string tag = "";
     int tagSize = WORD_SIZE - logBS;
-    for(int i=0;i<tagSize;i++)
+    for (int i = 0; i < tagSize; i++)
         tag += address[i];
 
-    for(int i=tagSize;i<address.length();i++)
+    for (int i = tagSize; i < address.length(); i++)
         offset += address[i];
-    
+
     return read(tag, offset);
-    
 }
 
-void associativeCache::write(string address, int data){
+void associativeCache::write(string address, int data) {
     string offset = "";
     string tag = "";
     int tagSize = WORD_SIZE - logBS;
-    
-    for(int i=0;i<tagSize;i++)
+
+    for (int i = 0; i < tagSize; i++)
         tag += address[i];
 
-    for(int i=tagSize;i<address.length();i++)
+    for (int i = tagSize; i < address.length(); i++)
         offset += address[i];
 
     write(tag, offset, data);
-    
+
     return;
 }
 
-
-int associativeCache::read(string tag, string offset){
-    for(int i=0;i<noOfLines;i++){
-        if(tagArray[i] == tag) return dataArray[i][binaryToDecimal(offset)];
-    }
+int associativeCache::read(string tag, string offset) {
+    for (int i = 0; i < noOfLines; i++)
+        if (tagArray[i] == tag) 
+            return dataArray[i][binaryToDecimal(offset)];
+    
     std::cout << "READ MISS for address " << tag + offset << std::endl;
     return -1;
 }
 
-void associativeCache::write(string tag, string offset, int data){
+void associativeCache::write(string tag, string offset, int data) {
     bool present = 0;
-    int index=-1;
-    for(int i=0;i<=noOfLines;i++) 
-        if(tagArray[i] == tag) {
-            present = 1; 
+    int index = -1;
+    for (int i = 0; i <= noOfLines; i++)
+        if (tagArray[i] == tag) {
+            present = 1;
             index = i;
-            break; 
+            break;
         }
 
-    if(present){
+    if (present) 
         dataArray[index][binaryToDecimal(offset)] = data;
-    }
-
-    else{
+    
+    else {
         std::cout << "WRITE MISS for address " << tag + offset << std::endl;
         vector<int> c(blockSize, 0);
         dataArray[associativePtr] = c;

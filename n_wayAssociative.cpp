@@ -1,8 +1,8 @@
 #include "cache.h"
 #include "n_wayAssociativeCache.h"
 
-n_wayAssociativeCache::n_wayAssociativeCache(int CL, int B, int N) : size(CL * B), noOfLines(CL), 
-        blockSize(B), n(N)
+n_wayAssociativeCache::n_wayAssociativeCache(int CL, int B, int N) : 
+    size(CL * B), noOfLines(CL), blockSize(B), n(N)
     {
         logS = (int) log2(size);
         logNOL = (int) log2(noOfLines);
@@ -14,17 +14,20 @@ n_wayAssociativeCache::n_wayAssociativeCache(int CL, int B, int N) : size(CL * B
     }
 
 void n_wayAssociativeCache::write(string address, int data){
-    int indexSize = log2(noOfLines / n);
+    int indexSize = (int) log2(noOfLines / n);
     int tagSize = WORD_SIZE - indexSize - logBS;
     
     string tag = "";
-    for(int i=0;i<tagSize;i++) tag += address[i];
+    for(int i=0;i<tagSize;i++) 
+        tag += address[i];
     
     string index = "";
-    for(int i=tagSize;i<tagSize+indexSize;i++) index+=address[i];
+    for(int i=tagSize;i<tagSize+indexSize;i++) 
+        index+=address[i];
     
     string offset = "";
-    for(int i=tagSize+indexSize;i<WORD_SIZE;i++) offset +=address[i];
+    for(int i=tagSize+indexSize;i<WORD_SIZE;i++) 
+        offset +=address[i];
 
     write(index, tag, offset, data);
 }
@@ -34,13 +37,16 @@ int n_wayAssociativeCache::read(string address){
     int tagSize = WORD_SIZE - indexSize - logBS;
     
     string tag = "";
-    for(int i=0;i<tagSize;i++) tag += address[i];
+    for(int i=0;i<tagSize;i++) 
+        tag += address[i];
     
     string index = "";
-    for(int i=tagSize;i<tagSize+indexSize;i++) index+=address[i];
+    for(int i=tagSize;i<tagSize+indexSize;i++) 
+        index+=address[i];
     
     string offset = "";
-    for(int i=tagSize+indexSize;i<WORD_SIZE;i++) offset +=address[i];
+    for(int i=tagSize+indexSize;i<WORD_SIZE;i++) 
+        offset +=address[i];
 
     return read(index, tag, offset);
 }
@@ -48,23 +54,26 @@ int n_wayAssociativeCache::read(string address){
 int n_wayAssociativeCache::read(string index, string tag, string offset){
     int start = binaryToDecimal(index) * n;
     for(int i=start;i<start+n;i++)
-        if(tagArray[i] == tag) return dataArray[i][binaryToDecimal(offset)];
+        if(tagArray[i] == tag) 
+            return dataArray[i][binaryToDecimal(offset)];
     
     std::cout << "READ MISS at address " << tag + index + offset << std::endl;
     return -1;
 }
 
 void n_wayAssociativeCache::write(string index, string tag, string offset, int data){
-    int start = binaryToDecimal(index) * n;
-    
+    int Index = binaryToDecimal(index);
+    int Offset = binaryToDecimal(offset);
+    int start = Index * n;
+
     for(int i=start;i<start+n;i++){
         if(tagArray[i] == tag){
-            dataArray[i][(binaryToDecimal(offset))] = data;
+            dataArray[i][Offset] = data;
             return;
         }
     }
     std::cout << "WRITE MISS at address " << tag + index + offset << std::endl;
-    tagArray[start + n_wayAssociativePtr[start]] = tag;
-    dataArray[start + n_wayAssociativePtr[start]][binaryToDecimal(offset)] = data;
-    n_wayAssociativePtr[start] = (n_wayAssociativePtr[start] + 1) % n;
+    tagArray[start + n_wayAssociativePtr[Index]] = tag;
+    dataArray[start + n_wayAssociativePtr[Index]][Offset] = data;
+    n_wayAssociativePtr[Index] = (n_wayAssociativePtr[Index] + 1) % n;
 }

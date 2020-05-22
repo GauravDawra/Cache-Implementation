@@ -6,20 +6,20 @@
 
 This project includes an OOP implemetaion of the various cache types. 
 It provides an API to declare a cache class of one of the following types:
-    1. Fully Associative cache
-    2. Directive cache
-    3. n-way Associative cache 
+1. Fully Associative cache
+2. Directive cache
+3. n-way Associative cache 
 
 ### NOTE : It has been assumed that the machine is 1 32-bit machine
 ### We can change the word size by changing the value of the constant `WORD_SIZE` in _"resources.cpp"_
 
 ## The "cache" class has the following prototype:
-##    template<type T> cache<T>
+##    `template<type T> cache<T>`
 
 `type` is is an enum which can take three values:
-    1. associative = 0,
-    2. directive,
-    3. n_wayAssociative
+1. associative = 0,
+2. directive,
+3. n_wayAssociative
 
 The cache class is intialized with the parameters 
  - CL : number of lines
@@ -29,20 +29,20 @@ The size of the cache is CL * B
 In case of n-way Associative cache, the input also requires 'n' as an input
 
 NOTE: The following constraints need to be maintained on CL, B and n:
-    1. CL, B and n are all powers of 
-    2. CL * B <= 2^(WORD_SIZE)
-    3. n <= CL [in case of n-way Associative cache]
+1. CL, B and n are all powers of 
+2. CL * B <= 2^(WORD_SIZE)
+3. n <= CL [in case of n-way Associative cache]
 
 The cache class derives from the following three classes publically:
-    1. associativeCache
-    2. directiveCache
-    3. n_wayAssociativeCache
+1. associativeCache
+2. directiveCache
+3. n_wayAssociativeCache
 
 The following are the functionalities provided by the cache<T> class:
 
- - **read <address>** : this command reads the content at the address if the address is  present in the cache (that is in the case of a cache HIT), and prints the result on the console. Otherwise, in case of cache MISS, no replacement takes place (since main memory has not been maintained, and the original contents cannot be read).
+ - **`read <address>`** : this command reads the content at the address if the address is  present in the cache (that is in the case of a cache HIT), and prints the result on the console. Otherwise, in case of cache MISS, no replacement takes place (since main memory has not been maintained, and the original contents cannot be read).
 
- - **write <address> <data>** : this command writes the contents of data (of type int) at the address if the address is present in the cache (that is, in case of a cache HIT). Otherwise, in case of a MISS, it loads the particular address in the cache. If an empty slot is present, it loads the new address in this neempty slot. Otherwise, it replaces a slot in the cache with the new address.
+ - **`write <address> <data>`** : this command writes the contents of data (of type int) at the address if the address is present in the cache (that is, in case of a cache HIT). Otherwise, in case of a MISS, it loads the particular address in the cache. If an empty slot is present, it loads the new address in this neempty slot. Otherwise, it replaces a slot in the cache with the new address.
 
 ### NOTE: all replacements take place in FIFO order
 ### Also, all new loaded memory locations in cache are initilized to zero
